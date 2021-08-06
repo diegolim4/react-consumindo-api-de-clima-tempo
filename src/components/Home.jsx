@@ -21,7 +21,8 @@ export default ()=>{
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition((position)=>{ // pede permissão para o navegador e pegar as coordenadas
-            console.log(position.coords.latitude, position.coords.longitude);
+            //console.log(position.coords.latitude, position.coords.longitude);
+            getWeather(position.coords.latitude, position.coords.longitude);
             setLocation(true)
         })
     }, [])
