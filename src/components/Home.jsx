@@ -1,7 +1,11 @@
 import React, {Fragment, useState, useEffect} from 'react'
 
 export default ()=>{
-    const [location, setLocation] = useState(false)
+    const [location, setLocation] = useState(false);
+    const [weather, setWeather] = useState(false); // state para gurda os dados da API para depois exibir
+    
+    // function expression responsável pela chamada da api
+    
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition((position)=>{ // pede permissão para o navegador e pegar as coordenadas
