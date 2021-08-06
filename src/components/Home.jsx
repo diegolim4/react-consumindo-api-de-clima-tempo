@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 
 export default ()=>{
-
+    const [location, setLocation] = useState(false)
     return(
         <Fragment>
             <h3>Clima no seu local</h3>
