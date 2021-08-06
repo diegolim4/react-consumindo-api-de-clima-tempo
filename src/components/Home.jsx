@@ -1,11 +1,23 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {Fragment, useState, useEffect, axios} from 'react'
 
 export default ()=>{
     const [location, setLocation] = useState(false);
     const [weather, setWeather] = useState(false); // state para gurda os dados da API para depois exibir
     
     // function expression responsável pela chamada da api
-    
+
+    let getWeather = async(lat, long)=>{
+        let res = await axios.get('http://api.openweathermap.org/data/2.5/weather',{
+            params:{
+                lat: lat,
+                long: long,
+                appid: process.env.REACT_APP_OPEN_WHEANTHER_KEY, // aqui fica a key que definimos no .env
+                lang: 'pt',
+                unit: 'metric'
+            }
+        })
+        setWeather(res.data);        
+    }
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition((position)=>{ // pede permissão para o navegador e pegar as coordenadas
