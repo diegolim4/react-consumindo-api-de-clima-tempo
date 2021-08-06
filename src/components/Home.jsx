@@ -1,43 +1,44 @@
-import React, {Fragment, useState, useEffect, axios} from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import axios from 'axios'
 
-export default ()=>{
+export default () => {
     const [location, setLocation] = useState(false);
     const [weather, setWeather] = useState(false); // state para gurda os dados da API para depois exibir
-    
+
     // function expression responsável pela chamada da api
 
-    let getWeather = async(lat, long)=>{
-        let res = await axios.get("http://api.openweathermap.org/data/2.5/weather",{
-            params:{
+    let getWeather = async (lat, long) => {
+        let res = await axios.get("http://api.openweathermap.org/data/2.5/weather", {
+            params: {
                 lat: lat,
-                long: long,
-                appid: process.env.REACT_APP_OPEN_WHEANTHER_KEY, // aqui fica a key que definimos no .env
+                lon: long,
+                appid: process.env.REACT_APP_OPEN_WHEATHER_KEY,  
                 lang: 'pt',
-                unit: 'metric'
+                units: 'metric'
             }
         })
-        setWeather(res.data);            
+        setWeather(res.data)
+        
     }
 
-    useEffect(()=>{
-        navigator.geolocation.getCurrentPosition((position)=>{ // pede permissão para o navegador e pegar as coordenadas
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => { // pede permissão para o navegador e pegar as coordenadas
             //console.log(position.coords.latitude, position.coords.longitude);
             getWeather(position.coords.latitude, position.coords.longitude);
             setLocation(true)
         })
     }, [])
 
-    if(location == false){
-        return(
+    if (location === false) {
+        return (
             <h3>Você precisa habilitar a localização em seu navegador</h3>
         )
-    }else if(weather == false){
-        return(
+    } else if (weather === false) {
+        return (
             <h3>Carregando o clima...</h3>
         )
-
-    }else{
-        return(
+    } else {
+        return (
             <Fragment>
                 <h3>Clima no seu local({weather['weather'][0]['description']})</h3>
                 <hr />
@@ -47,8 +48,8 @@ export default ()=>{
                     <li>Temperatura Minima: {weather['main']['temp_min']}º</li>
                     <li>Pressão: {weather['main']['pressure']} hpa</li>
                     <li>Umidade: {weather['main']['humidity']}%</li>
-                </ul>    
+                </ul>
             </Fragment>
         );
-    }    
+    }
 }
