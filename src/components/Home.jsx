@@ -7,7 +7,7 @@ export default ()=>{
     // function expression responsável pela chamada da api
 
     let getWeather = async(lat, long)=>{
-        let res = await axios.get('http://api.openweathermap.org/data/2.5/weather',{
+        let res = await axios.get("http://api.openweathermap.org/data/2.5/weather",{
             params:{
                 lat: lat,
                 long: long,
@@ -16,7 +16,7 @@ export default ()=>{
                 unit: 'metric'
             }
         })
-        setWeather(res.data);        
+        setWeather(res.data);            
     }
 
     useEffect(()=>{
@@ -29,19 +29,24 @@ export default ()=>{
 
     if(location == false){
         return(
-            <h1>Você precisa habilitar a localização em seu navegador</h1>
+            <h3>Você precisa habilitar a localização em seu navegador</h3>
         )
+    }else if(weather == false){
+        return(
+            <h3>Carregando o clima...</h3>
+        )
+
     }else{
         return(
             <Fragment>
-                <h3>Clima no seu local</h3>
+                <h3>Clima no seu local({weather['weather'][0]['description']})</h3>
                 <hr />
                 <ul>
-                    <li>Temperatura atual: xº</li>
-                    <li>Temperatura Máxima: xº</li>
-                    <li>Temperatura Minima: xº</li>
-                    <li>Pressão: x hpa</li>
-                    <li>Umidade: x%</li>
+                    <li>Temperatura atual: {weather['main']['temp']}º</li>
+                    <li>Temperatura Máxima: {weather['main']['temp_max']}º</li>
+                    <li>Temperatura Minima: {weather['main']['temp_min']}º</li>
+                    <li>Pressão: {weather['main']['pressure']} hpa</li>
+                    <li>Umidade: {weather['main']['humidity']}%</li>
                 </ul>    
             </Fragment>
         );
